@@ -9,6 +9,7 @@
 void checkShaderCompile(GLuint shader);
 void checkProgramLink(GLuint program);
 
+std::ostream& operator<<(std::ostream& stream, const glm::vec2& v);
 std::ostream& operator<<(std::ostream& stream, const glm::vec3& v);
 std::ostream& operator<<(std::ostream& stream, const glm::dvec3& v);
 

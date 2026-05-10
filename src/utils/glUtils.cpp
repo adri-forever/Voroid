@@ -66,6 +66,11 @@ void checkProgramLink(GLuint program) {
 }
 
 //Easy vector prints
+std::ostream& operator<<(std::ostream& stream, const glm::vec2& v) {
+	stream << "(" << v.x << ", " << v.y << ")";
+	return stream;
+}
+
 std::ostream& operator<<(std::ostream& stream, const glm::vec3& v) {
 	stream << "(" << v.x << ", " << v.y << ", " << v.z << ")";
 	return stream;

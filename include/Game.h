@@ -27,8 +27,6 @@ public:
 
 	SDL_Window* window;
 
-	//static SDL_Renderer* renderer;
-	// static SDL_Event event;
 	static Vorender glRenderer;
 	static std::vector<SDL_Event> events;
 
@@ -46,10 +44,10 @@ public:
 	glm::vec3 regioncolors[totsize];
 	int size = 0;
 
-	float pointradius = .01; // Squared distances
-	float frontierwidth = .005;
+	float pointradius = .01f;
+	float frontierwidth = .01f;
 	glm::vec3 pointcolor = glm::vec3(0.f, 0.f, 0.f);
-	glm::vec3 frontiercolor = glm::vec3(0.f, 0.f, 0.f);
+	glm::vec3 frontiercolor = glm::vec3(.1f, .1f, .1f);
 
 	void addnode(float x, float y);
 

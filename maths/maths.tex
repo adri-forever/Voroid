@@ -1,0 +1,51 @@
+\documentclass{article}
+%\usepackage{assymbb}
+\begin{document}
+Espace a 2 dim borne avec $x \in [0, 1]$ et $y \in [0, 1] $\\
+
+Soient $A(a_x, a_y)$, $B(b_y, b_y)$ deux points distincts pour lesquels on souhaite connaitre la médiatrice med\\
+
+Soit $C(c_x, c_y)$ le point dont on souhaite calculer la distance à la médiatrice\\
+
+Soit $M(m_x, m_y)$ le milieu du segment [AB]. Par def $M \in med$\\
+$m_x = (a_x+b_x)/2$\\
+$m_y = (a_y+b_y)/2$\\
+
+Soit $\vec{AB}$ le vecteur transformant A vers B\\
+$\vec{AB}_x = b_x-a_x$\\
+$\vec{AB}_y = b_y-a_y$\\
+
+Soit $\vec{p}$ un vecteur perpendiculaire à $\vec{AB}$\\
+$\vec{p}_x = -\vec{AB}_y = a_y-b_y$\\
+$\vec{p}_y = \vec{AB}_y = b_x-a_x$\\
+
+Par définition, ce vecteur est colinéaire à med.\\
+On peut définir med $(M, \vec{p})$ car perpendiculaire au segment [AB] et coupant par son milieu\\
+
+Soit $H(h_x, h_y)$ la projection orthogonale de C sur med\\
+H doit satisfaire 2 conditions:\\
+(1) $\vec{CH} \cdot \vec{p} = 0$ (perpendiculaire)\\
+(2) $H \in (M,\vec{p})$\\
+
+On précise:\\
+$\vec{CH}_x = h_x-c_x$\\
+$\vec{CH}_y = h_y-c_y$\\
+
+Developpons (2):\\
+$\exists t \in R$ tq $H = M + t*\vec{p}$\\
+Donc\\
+$h_x = m_x + t*\vec{p}_x = (a_x+b_x)/2 + t*(a_y - b_y)$ (4)\\
+$h_y = m_y + t*\vec{p}_y = (a_y+b_y)/2 + t*(b_x - a_x)$ (5)\\
+
+D'apres (1):\\
+$(h_x-c_x)(a_y-b_y) + (h_y-c_y)(b_x-a_x) = 0$\\
+$\Leftrightarrow h_x(a_y-b_y) - c_x(a_y - b_y) + h_y(b_x - a_x) - c_y(b_x - a_x) = 0$\\
+$\Leftrightarrow (\frac{a_x+b_x}{2} + t(a_y - b_y))(a_y-b_y) - c_x(a_y - b_y) + (\frac{a_y+b_y}{2} + t(b_x - a_x))(b_x - a_x) - c_y(b_x - a_x) = 0$\\
+$\Leftrightarrow t(a_y-b_y)^2 + \frac{(a_x+b_x)(a_y-b_y)}{2} - c_x(a_y - b_y) + t(b_x-a_x)^2 + \frac{(a_y+b_y)(b_x-a_x)}{2} - c_y(b_x - a_x) = 0$\\
+$\Leftrightarrow t((a_y-b_y)^2 + (b_x-a_x)^2) + \frac{(a_x+b_x)(a_y-b_y)}{2} - c_x(a_y - b_y) + \frac{(a_y+b_y)(b_x-a_x)}{2} - c_y(b_x - a_x) = 0$\\
+$\Leftrightarrow t((a_y-b_y)^2 + (b_x-a_x)^2) = -\frac{(a_x+b_x)(a_y-b_y)}{2} + c_x(a_y - b_y) - \frac{(a_y+b_y)(b_x-a_x)}{2} + c_y(b_x - a_x)$\\
+$\Leftrightarrow t = \frac{c_x(a_y - b_y) + c_y(b_x - a_x) - \frac{(a_x+b_x)(a_y-b_y)-(a_y+b_y)(b_x-a_x)}{2}}{(a_y-b_y)^2 + (b_x-a_x)^2}$\\
+$\Leftrightarrow t = \frac{c_x(a_y - b_y) + c_y(b_x - a_x) - \frac{a_xa_y - a_xb_y + b_xa_y - b_xb_y +a_ya_x-a_yb_x+b_ya_x-b_yb_x}{2}}{(a_y-b_y)^2 + (b_x-a_x)^2}$\\
+$\Leftrightarrow t = \frac{c_x(a_y - b_y) + c_y(b_x - a_x) - a_xa_y + b_xb_y}{(a_y-b_y)^2 + (b_x-a_x)^2}$\\
+ 
+\end{document}

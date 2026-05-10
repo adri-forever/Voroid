@@ -12,7 +12,7 @@ int main(int argc, char* argv[]) {
 	int frameTime;
 
 	game = new Game();
-	game->init("Celestial", 1280, 720, SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE);
+	game->init("Voroid", 1280, 720, SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE);
 
 	while (game->isRunning) {
 		frameStart = SDL_GetTicks();

@@ -18,13 +18,7 @@ Vorender::~Vorender() {
 void Vorender::init(SDL_GLContext context) {
 	glContext = context;
 
-	// glEnable(GL_DEPTH_TEST);
-	// glDepthFunc(GL_LESS);
-
-	// glEnable(GL_STENCIL_TEST);
-	// glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
-
-	glClearColor(.2f, .2f, .2f, 1.0f);
+	glClearColor(.3f, .3f, .3f, 1.0f);
 
 	//Build shader program
 	std::string vrt = loadShaderFile("./assets/shaders/fullscreen.vert");

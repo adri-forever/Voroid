@@ -1,13 +1,6 @@
 #include "Game.h"
 
-#ifndef GLM_ENABLE_EXPERIMENTAL
-#define GLM_ENABLE_EXPERIMENTAL
-#include "glm/gtx/string_cast.hpp"
-#endif //!GLM_ENABLE_EXPERIMENTAL
-
-#include "glm/gtx/rotate_vector.hpp"
-#include "glm/gtc/matrix_transform.hpp"
-#include "glm/gtc/type_ptr.hpp"
+#include "toolbox.h"
 
 Vorender Game::glRenderer;
 std::vector<SDL_Event> Game::events;
@@ -25,17 +18,12 @@ void Game::init(const char* title, int width, int height, SDL_WindowFlags flags)
 		windowSize = glm::ivec2(width, height);
 		aspect = (float)width/(float)height;
 		window = SDL_CreateWindow(title, width, height, flags);
-		//SDL_WindowFlags windowFlags = SDL_GetWindowFlags(window);
 		
 		if (window) {
 			std::cout << "Window created" << std::endl;
+			//SDL_WindowFlags windowFlags = SDL_GetWindowFlags(window);
 			//std::cout << "Requested flags: " << windowFlags << std::endl;
 		}
-
-		/*renderer = SDL_CreateRenderer(window, NULL);
-		if (renderer) {
-			std::cout << "Renderer created" << std::endl;
-		}*/
 		 
 		if ((flags & SDL_WINDOW_OPENGL) != 0) {
 			SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4);
@@ -70,6 +58,7 @@ void Game::init(const char* title, int width, int height, SDL_WindowFlags flags)
 
 		toggleCursor(relativeState); //sync without changing
 
+		// Bind dummy vao
 		glGenVertexArrays(1, &vao);
 		glBindVertexArray(vao);
 
@@ -79,19 +68,31 @@ void Game::init(const char* title, int width, int height, SDL_WindowFlags flags)
 			regioncolors[i] = glm::vec3(1.f, 1.f, 1.f);
 		}
 
-		addnode(.5f, .5f);
-		addnode(.25f, .5f);
-		addnode(.5f, .25f);
-		addnode(.75f, .5f);
-		addnode(.5f, .75f);
-		addnode(.9f, .9f);
-
+		for (size_t i=0; i<25; i++) {
+			addnode(random01(), random01());
+		}
+		// addnode(.5f, .5f);
+		// addnode(.25f, .5f);
+		// addnode(.5f, .25f);
+		// addnode(.75f, .5f);
+		// addnode(.5f, .75f);
+		// addnode(.9f, .9f);
 	}
 }
 
 void Game::addnode(float x, float y) {
+	// Register positions
 	nodes[size].x = x;
 	nodes[size].y = y;
+
+	// Generate color
+	float hue = random01();
+	glm::vec3 hsl = glm::vec3(hue, .9f, .6f);
+	glm::vec3 rgb = hsl_to_rgb(hsl);
+	// std::cout << hsl << ", " << rgb << std::endl;
+	regioncolors[size] = rgb;
+
+	// Increment active size
 	size++;
 }
 
@@ -116,7 +117,7 @@ void Game::handleEvents() {
 				windowSize = glm::ivec2(event.window.data1, event.window.data2);
 				glViewport(0, 0, windowSize.x, windowSize.y); //Synchronize OpenGL viewport size
 				aspect = (float)windowSize.x / (float)windowSize.y;
-				std::cout << "Window resized to " << glm::to_string(windowSize) << std::endl;
+				std::cout << "Window resized to " << windowSize << std::endl;
 				break;
 
 			case SDL_EVENT_KEY_DOWN:
@@ -137,11 +138,9 @@ void Game::handleEvents() {
 }
 
 void Game::update(int framelength) {
-	double dt = (double)framelength/1000; // framelength is in ms and dt is in s. compute in your head what time ratio that makes
-
 	age++;
 
-	printf("Frame number: %d\n", age);
+	// printf("Frame number: %d\n", age);
 }
 
 void Game::render() {
