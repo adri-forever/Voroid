@@ -45,7 +45,7 @@ public:
 	int size = 0;
 
 	float pointradius = .01f;
-	float frontierwidth = .01f;
+	float frontierwidth = .005f;
 	glm::vec3 pointcolor = glm::vec3(0.f, 0.f, 0.f);
 	glm::vec3 frontiercolor = glm::vec3(.1f, .1f, .1f);
 

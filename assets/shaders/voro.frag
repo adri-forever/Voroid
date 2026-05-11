@@ -24,7 +24,7 @@ float sq(float x) {
 
 // Distance functions with overloads
 float dist(float x1, float y1, float x2, float y2) {
-    return sqrt(sq(aspect*(x2-x1)) + sq(y2-y1)); // we can allow ourselves a sqrt, its not that expensive anymore
+    return sqrt(sq((x2-x1)) + sq(y2-y1)); // we can allow ourselves a sqrt, its not that expensive anymore
 }
 
 float dist(vec2 a, vec2 b) { // distance between two vector points
@@ -35,12 +35,16 @@ float dist(int i1, int i2) { // distance between to nodes (useful ?)
     return dist(nodes[i1], nodes[i2]);
 }
 
-float dist(int index) { // if only one index is given, take distance with uv coordinates
-    return dist(uv, nodes[index]);
+float dist(vec2 u, int index) { // if only one index is given, take distance with uv coordinates
+    return dist(u, nodes[index]);
 }
 
 void main() {
     vec3 color;
+
+    vec2 uvp = uv;
+    uvp.x *= aspect;
+
     int min1=0, min2=1, i;
     // closest point index, second closest point index, iterator/temp variable
     float dst1, dst2, dst, t;
@@ -52,8 +56,8 @@ void main() {
     // Find closest two nodes
 
         // Initialize minimal distances
-    dst1 = dist(min1);
-    dst2 = dist(min2);
+    dst1 = dist(uvp, min1);
+    dst2 = dist(uvp, min2);
 
     if (dst1 > dst2 && size > 1) {
         i = min2;
@@ -68,7 +72,7 @@ void main() {
 
         // First two nodes have been treated in initialization
     for (i=2; i<size; i++) {
-        dst = dist(i);
+        dst = dist(uvp, i);
         if (dst < dst1) {
             min2 = min1;
             dst2 = dst1;
@@ -95,11 +99,11 @@ void main() {
 
         // t = 0;
         // parametric geometry to find projection of uv on bisector
-        t = (uv.x*(pt1.y - pt2.y) + uv.y*(pt2.x - pt1.x) - pt1.x*pt1.y + pt2.x*pt2.y)
+        t = (uvp.x*(pt1.y - pt2.y) + uvp.y*(pt2.x - pt1.x) + pt1.x*pt2.y - pt1.y*pt2.x)
             / (sq(pt1.y-pt2.y)+sq(pt2.x-pt1.x));
         prjpt = mpt + t*prp;
 
-        float dstuv = dist(uv, prjpt);
+        float dstuv = dist(uvp, prjpt);
         float dstm = dist(prjpt, pt1);
         float rat = dstuv / dstm; // necessarily between 0 and 1 
         // color = 1 - ((1-color)*rat);

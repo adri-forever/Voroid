@@ -153,8 +153,15 @@ void Game::render() {
 
 	// glUniform1f(glGetUniformLocation(glRenderer.shaderProgram, "time"), (GLfloat)age/(GLfloat)60.f);
 
+	glm::vec2 scalednodes[totsize]; // resize nodes according to aspect ratio
+	for (int i=0; i<size; i++) {
+		scalednodes[i] = nodes[i];
+		scalednodes[i].x *= aspect;
+	}
+
 	glUniform1f(glRenderer.getLocation("aspect"), aspect);
-	glUniform2fv(glRenderer.getLocation("nodes"), totsize, &nodes[0].x);
+	// glUniform1f(glRenderer.getLocation("aspect"), 1);
+	glUniform2fv(glRenderer.getLocation("nodes"), totsize, &scalednodes[0].x);
 	glUniform3fv(glRenderer.getLocation("regioncolors"), totsize, &regioncolors[0].x);
 	glUniform1i(glRenderer.getLocation("size"), size);
 	glUniform1f(glRenderer.getLocation("pointradius"), pointradius);
