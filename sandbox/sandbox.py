@@ -7,12 +7,21 @@ def sq(x: float):
 def drawpoints(points):
     x: list[float] = []
     y: list[float] = []
-
+    labels: list[str] = []
     for point in points:
-        x.append(point[0])
-        y.append(point[1])
-    
+        x.append(point[1][0])
+        y.append(point[1][1])
+        labels.append(point[0])
+
     plt.scatter(x, y, label = 'Points')
+    
+    for point in points:
+        plt.annotate(point[0], point[1]+.01, textcoords='data')
+
+def drawlines(lines):
+
+    for line in lines:
+        pass
 
 if __name__=='__main__':
     A = np.array([.25, .75])
@@ -23,12 +32,16 @@ if __name__=='__main__':
     pv = np.array([-ABv[1], ABv[0]]) # perpendicular
 
     M = .5*(A+B) # midpoint
-    t: float = (C[0]*(A[1] - B[1]) + C[1]*(B[0] - A[0]) - A[0]*A[1] + B[0]*B[1]) / (sq(A[1]-B[1])+sq(B[0]-A[0]))
+    t: float = (C[0]*(A[1] - B[1]) + C[1]*(B[0] - A[0]) + A[0]*B[1] - A[1]*B[0]) / (sq(A[1]-B[1])+sq(B[0]-A[0]))
+
+    Mp = M + pv#/pow(pv[0]*pv[0]+pv[1]*pv[1], .5)
 
     H = M + t*pv
     
     plt.figure(0)
-    drawpoints([A, B, C, M, H])
+    drawpoints([('A', A), ('B', B), ('C', C), ('M', M), ('M\'', Mp), ('H', H)])
+    drawlines([(['[AB]', A, B]), ('(M,pv)', M, M+pv)])
+    plt.gca().set_aspect('equal')
     plt.show()
     # plt
     """
